@@ -1,0 +1,47 @@
+###
+GET http://localhost:3000/admin/api/timelapseInfo/29
+Cookie: {{authCookie}}
+###
+
+###
+POST http://localhost:3000/admin/api/timelapseInfo/29
+Cookie: {{authCookie}}
+Content-Type: application/json; charset=utf-8
+
+{
+    "type": "ROW",
+    "name": "Hhader1",
+    "dataInfo": {
+        "dateFrom": "2018-01-01",
+        "dateTo":  "2018-01-02"
+    }
+}
+
+
+###
+PUT http://localhost:3000/admin/api/timelapseInfo/29/2
+Cookie: {{authCookie}}
+Content-Type: application/json; charset=utf-8
+
+{
+    "type": "ROW",
+    "name": "QQQ",
+    "dataInfo": {
+        "dateFrom": "2018-01-03",
+        "dateTo":  "2018-01-04"
+    }
+}
+
+###
+
+###
+DELETE http://localhost:3000/admin/api/timelapseInfo/29/5
+Cookie: {{authCookie}}
+###
+
+###
+GET http://localhost:3000/admin/api/timelapseInfo/936/cloneTable
+Cookie: {{authCookie}}
+###
+
+

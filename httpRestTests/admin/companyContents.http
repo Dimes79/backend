@@ -1,0 +1,13 @@
+###
+// @no-log
+PUT http://localhost:3000/admin/api/companyContent/98
+Cookie: {{authCookie}}
+Content-Type: application/json; charset=utf-8
+
+{
+    "date": "2020-02-01",
+    "description": "test",
+    "filterId": [1,2]
+}
+
+###

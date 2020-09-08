@@ -1,0 +1,7 @@
+### Share
+
+// @no-log
+GET http://localhost:3000/user/api/share/?id=91&type=companyContent&t=2
+Content-Type: application/json; charset=utf-8
+Cookie: {{authCookie}}
+###

@@ -1,0 +1,60 @@
+###
+// @no-log
+GET http://localhost:3000/admin/api/lines/1/aeroVideoPoints
+Cookie: {{authCookie}}
+###
+
+###
+// @no-log
+POST http://localhost:3000/admin/api/lines/1/aeroVideoPoints
+Cookie: {{authCookie}}
+Content-Type: application/json; charset=utf-8
+
+{
+    "id":12,
+    "lineId":1,
+    "title": "QQQQ1",
+    "description": "TEST2",
+    "meta":{
+        "section": 1
+    },
+    "gps": {
+        "lat": 1.3,
+        "long": 2.4
+    }
+}
+###
+
+
+###
+// @no-log
+GET http://localhost:3000/admin/api/lines/1/aeroVideoPoints/1
+Cookie: {{authCookie}}
+###
+
+###
+// @no-log
+PUT http://localhost:3000/admin/api/lines/1/aeroVideoPoints/1
+Cookie: {{authCookie}}
+Content-Type: application/json; charset=utf-8
+
+{
+    "id":13,
+    "lineId":1,
+    "title": "ZZZZ11",
+    "description": "QQQQ",
+    "meta":{
+        "section": 2
+    },
+    "gps": {
+        "lat": 2,
+        "long": 2.4
+    }
+}
+###
+
+###
+// @no-log
+DELETE http://localhost:3000/admin/api/lines/1/aeroVideoPoints/2
+Cookie: {{authCookie}}
+###

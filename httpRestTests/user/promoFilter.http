@@ -1,0 +1,11 @@
+###
+// @no-log
+GET http://localhost:3000/user/api/promoFilter
+Cookie: {{authCookie}}
+###
+
+###
+// @no-log
+GET http://localhost:3000/user/api/companies/1/promoFilter
+Cookie: {{authCookie}}
+###

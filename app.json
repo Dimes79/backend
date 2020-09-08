@@ -1,0 +1,8 @@
+{
+    "scripts": {
+      "dokku": {
+          "postdeploy": "npm run migration && npm run seeder"
+      }
+    }
+}
+

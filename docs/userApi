@@ -1,0 +1,165 @@
+Все ответы вида:
+{
+    "success": Boolean,
+    "payload": Содержит запрашиваемые данные
+    .......
+}
+
+Пагинация:
+?page=0&limit=6
+"pagination": {
+    "limit": 6,
+    "page": 0,
+    "pages": 3
+}
+
+При ошибке:
+{
+    "success":false,
+    "error": "Текст ошибки"
+}
+
+Возможные коды ошибок:
+notFound
+permissionDenied
+
+Авториация:
+post:/user/api/login
+Запрос:
+{
+    email: 'asd@asd.com',
+    password: '12345'
+}
+Ответ:
+{"success":true, "redirect":URL}
+
+Logout:
+get:/user/api/logout
+Ответ:
+{"success":true, "redirect":URL}
+
+
+///////////////////////////
+Пользователи
+Модель: {
+    "id": INTEGER,
+    "status": [ACTIVE|INACTIVE],
+    "name": String
+    "email": String,
+    "kind": [SUPER|AGENT|USER],    // Тип пользователя
+    "projects": Array(INTEGER) | NULL,    // Список проектов к каким пользователь имеет доступ(Для SUPER необязательный)
+  }
+
+get /user/api/my - Свой профайл
+
+
+///////////////////////////
+Проекты
+
+Модель: Project {
+    "id": INTEGER
+    "status": [ACTIVE|INACTIVE],
+    "name": String,
+    "description": String,
+    "gps": {
+        "lat": Float,
+        "long": Float,
+    },
+    "image": {
+        "tmb": String, // Ссылка на тумбу фотки
+        "src": String, // Ссылка на исходную фотку
+    }
+  }
+
+get /user/api/projects/ - Список проектов доступных для данного пользователя
+get /user/api/projects/:projectID - Получение проекта по ID
+
+///////////////////////////
+Отрезки
+
+Модель: Line {
+    "id": INTEGER
+    "status": [ACTIVE|INACTIVE],
+    "name": String,
+    "description": String,
+    "gps": {
+        "lat": Float,
+        "long": Float,
+    },
+    "image": {
+        "tmb": String, // Ссылка на тумбу фотки
+        "src": String, // Ссылка на исходную фотку
+    },
+    "projectId": INTEGER,
+    "project": Project (Выводится только при запросе конкретной модели)
+  }
+
+get /user/api/projects/:projectID/lines/ - Список
+get /user/api/projects/:projectID/lines/:lineID - Получение по ID
+
+
+///////////////////////////
+Точки съемки
+
+Модель:Point {
+    "id": INTEGER
+    "status": [ACTIVE|INACTIVE],
+    "name": String,
+    "description": String,
+    "gps": {
+        "lat": Float,
+        "long": Float,
+    },
+    "projectId": INTEGER,
+    "project": Project, (Выводится только при запросе конкретной модели)
+    "lineId": INTEGER,
+    "line": Line (Выводится только при запросе конкретной модели)
+  }
+
+get /user/api/projects/:projectID/lines/:lineID/points/ - Список
+get /user/api/projects/:projectID/lines/:lineID/points/:pointID - Получение по ID
+
+///////////////////////////
+Контент
+
+Модель:Content {
+    "id": INTEGER
+    "src": {
+        "src": String, // Ссылка на исходник
+        "tmb": String, // Ссылка на тумбу(опционально)
+    },
+    "gps": { // Или null если координаты не удалось вытащить из контента
+         "lat": Float,
+         "long": Float,
+     },
+     "description": String,
+  }
+
+:type может принимать значения [image,video,panorama]
+
+наряду с пагинацие можно делать выборку по дате:
+dateFrom="YYYY-MM-DD"&dateTo="YYYY-MM-DD"
+если dateTo не указана то выборка идет только за один dateFrom="YYYY-MM-DD"
+
+get /user/api/projects/:projectID/lines/:lineID/content/:type - Список
+get /user/api/lines/:lineID/content/:type - Список по номеру линии
+get /user/api/projects/:projectID/lines/:lineID/content/:type/calendar
+    - Список дней в которых есть контен(просто массив дат) есть пагинация и ограничение по датам
+get /user/api/lines/:lineID/content/:type/calendar
+    - Список дней по номеру линии в которых есть контен(просто массив дат) есть пагинация и ограничение по датам
+
+
+Аэро
+Модель:Content {
+    "id": INTEGER
+    "src": {
+        "src": String, // Ссылка на исходник
+    },
+    "gps": { // Или null если координаты не удалось вытащить из контента
+         "lat": Float,
+         "long": Float,
+     },
+  }
+
+get /user/api/aerial
+get /user/api/aerial/calendar

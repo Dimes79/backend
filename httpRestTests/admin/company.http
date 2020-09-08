@@ -1,0 +1,69 @@
+###
+// @no-log
+GET http://localhost:3000/admin/api/companies
+Cookie: {{authCookie}}
+
+###
+
+
+###
+// @no-log
+GET http://localhost:3000/admin/api/companies/1?1
+Cookie: {{authCookie}}
+###
+
+
+###
+// @no-log
+POST http://localhost:3000/admin/api/companies
+Cookie: {{authCookie}}
+Content-Type: application/json; charset=utf-8
+
+{
+    "name": "Демо1",
+    "contents": [
+        "PROMO",
+        "STREAM"
+    ]
+}
+
+###
+
+###
+// @no-log
+PUT http://localhost:3000/admin/api/companies/2
+Cookie: {{authCookie}}
+Content-Type: application/json; charset=utf-8
+
+{
+    "status": "ACTIVE",
+    "name": "Демо2",
+    "contents": [
+        "PROMO"
+    ]
+}
+
+###
+
+###
+// @no-log
+DELETE http://localhost:3000/admin/api/companies/2
+Cookie: {{authCookie}}
+###
+
+###
+// @no-log
+POST http://localhost:3000/admin/api/companies/1/uploadVideo?q=2
+Cookie: {{authCookie}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="video2.mp4"
+
+< /Users/dmitrijmarcenko/Downloads/eexbs8gk13w42nt_src.mp4
+--WebAppBoundary--
+
+###
+
+
+

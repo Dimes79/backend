@@ -1,0 +1,44 @@
+###
+// @no-log
+GET http://localhost:3000/admin/api/promoFilter/
+Cookie: {{authCookie}}
+###
+
+###
+// @no-log
+POST http://localhost:3000/admin/api/promoFilter
+Cookie: {{authCookie}}
+Content-Type: application/json; charset=utf-8
+
+{
+    "title": "Месяц1",
+    "companyId": 2,
+    "type": "month"
+}
+###
+
+
+###
+// @no-log
+GET http://localhost:3000/admin/api/promoFilter/11
+Cookie: {{authCookie}}
+###
+
+###
+// @no-log
+PUT http://localhost:3000/admin/api/promoFilter/13
+Cookie: {{authCookie}}
+Content-Type: application/json; charset=utf-8
+
+{
+    "title": "QQQ",
+    "companyId": 1,
+    "type": "MONTH"
+}
+###
+
+###
+// @no-log
+DELETE http://localhost:3000/admin/api/promoFilter/9
+Cookie: {{authCookie}}
+###

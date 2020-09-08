@@ -1,0 +1,49 @@
+###
+GET http://localhost:3000/admin/api/projects/1/lines
+Cookie: {{authCookie}}
+###
+
+
+###
+GET http://localhost:3000/admin/api/projects/1/lines/1
+Cookie: {{authCookie}}
+###
+
+###
+DELETE http://localhost:3000/admin/api/projects/11/lines/26
+Cookie: {{authCookie}}
+###
+
+
+###
+PUT http://localhost:3000/admin/api/projects/11/lines/24
+Cookie: {{authCookie}}
+Content-Type: application/json; charset=utf-8
+
+{
+    "id": 24,
+    "status": "ACTIVE",
+    "name": "Атриум",
+    "description": "Работа",
+    "gps": {
+        "lat": 59.574855,
+        "long": 30.124748
+    },
+    "agentPlans": {
+        "points": 2,
+        "photos": 1,
+        "videos": 1,
+        "panoramas": 0
+    },
+    "image": {
+        "src": "/storage2/11/2018/11/70jn12lmjoffo6u2_src.jpg",
+        "tmb": "/storage2/11/2018/11/70jn12lmjoffo6u2_tmb.jpg"
+    },
+    "projectId": 11,
+    "updatedAt": "2018-11-27T12:31:40.373Z",
+    "orderWeight": 100
+}
+
+###
+
+

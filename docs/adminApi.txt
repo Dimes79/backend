@@ -1,0 +1,93 @@
+Все ответы вида:
+{
+    "success": Boolean,
+    "payload": Содержит запрашиваемые данные
+    .......
+}
+
+Пагинация:
+?page=0&limit=6
+"pagination": {
+    "limit": 6,
+    "page": 0,
+    "pages": 3
+    "total": INT -  общее количество строк без limit
+}
+
+При ошибке:
+{
+    "success":false,
+    "error": "Текст ошибки"
+}
+
+Возможные коды ошибок:
+alreadyExists
+notFound
+permissionDenied
+tableNotFound
+wrongRequest
+
+Авториация:
+post:/admin/api/login
+Запрос:
+{
+    email: 'super@site.com',
+    password: '123456'
+}
+Ответ:
+{"success":true, "redirect":URL}
+
+Logout:
+get:/admin/api/logout
+Ответ:
+{"success":true, "redirect":URL}
+
+
+///////////////////////////
+Пользователи
+Модель: {
+    "id": INTEGER,
+    "status": [ACTIVE|INACTIVE],
+    "name": String
+    "email": String,
+    "kind": [SUPER|AGENT|USER],    // Тип пользователя
+    "projects": Array(INTEGER) | NULL,    // Список проектов к каким пользователь имеет доступ(Для SUPER необязательный)
+}
+
+get /admin/api/users/my - Свой профайл
+get /admin/api/users/ - Список пользователей
+post /admin/api/users/ - Добавление нового пользователя
+get /admin/api/users/:userID - Получение пользователя по ID
+put /admin/api/users/:userID - Обновление пользователя по ID
+delete admin/api/users/:userID - Удаление пользователя по ID
+
+
+///////////////////////////
+Контент
+
+Модель:Content {
+    "id": INTEGER
+    "src": {
+        "src": String, // Ссылка на исходник
+        "tmb": String, // Ссылка на тумбу(опционально)
+    },
+    "gps": { // Или null если координаты не удалось вытащить из контента
+            "lat": Float,
+            "long": Float,
+    },
+    "description": String,
+  }
+
+:type может принимать значения [image,video,panorama]
+
+наряду с пагинацие можно делать выборку по дате:
+dateFrom="YYYY-MM-DD"&dateTo="YYYY-MM-DD"
+если dateTo не указана то выборка идет только за один dateFrom="YYYY-MM-DD"
+
+get /admin/api/projects/:projectID/lines/:lineID/content/:type - Список
+post /admin/api/projects/:projectID/lines/:lineID/content/:type - Добавление
+put /admin/api/projects/:projectID/lines/:lineID/content/:type/:contentID - Обновление по ID
+delete /admin/api/projects/:projectID/lines/:lineID/content/:type/:contentID - Удаление по ID
+
+get /admin/api/projects/:projectID/lines/:lineID/content/:type/calendar - Список дней в которых есть контен(просто массив дат)
+                                                                          есть пагинация и ограничение по датам

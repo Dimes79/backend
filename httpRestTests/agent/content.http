@@ -1,0 +1,36 @@
+###
+POST http://localhost:3000/agent/api/content/site/
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+Cookie: {{authCookie}}
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"
+
+field-value
+--WebAppBoundary--
+
+--WebAppBoundary
+Content-Disposition: form-data; name="projectId"
+
+1
+--WebAppBoundary--
+
+--WebAppBoundary
+Content-Disposition: form-data; name="lineId"
+
+1
+--WebAppBoundary--
+
+--WebAppBoundary
+Content-Disposition: form-data; name="date"
+
+2019-01-01
+--WebAppBoundary--
+
+--WebAppBoundary
+Content-Disposition: form-data; name="type"
+
+IMAGE
+--WebAppBoundary--
+
+###

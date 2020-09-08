@@ -1,0 +1,7 @@
+[
+    {
+        "title": "Disk 1",
+        "path": "/",
+        "minFreeSpace" : 100, // MiB
+    }
+]

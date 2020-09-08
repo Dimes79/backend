@@ -1,0 +1,18 @@
+{
+    "root": true,
+    "env": {
+      "node": true,
+      "es6": true,
+      "jest": true
+    },
+    "extends": "airbnb-base",
+    "plugins": ["eslint-plugin-import", "eslint-plugin-node", "eslint-plugin-promise"],
+    "rules": {
+        "no-use-before-define": ["error", { "functions": false }],
+        "no-console": "off",
+        "arrow-parens": ["error", "always"],
+        "indent": [ 2, 4, { "SwitchCase": 1 } ],
+        "quotes": [ "error", "double" ],
+        "max-len": [ "error", { "code": 120 } ]
+    }
+}

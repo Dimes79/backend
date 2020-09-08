@@ -1,0 +1,21 @@
+###
+// @no-log
+GET http://localhost:3000/admin/api/projects/6/lines/25/content/IMAGE
+Cookie: {{authCookie}}
+
+###
+
+###
+// @no-log
+POST http://localhost:3000/admin/api/content/linkSubline
+Cookie: {{authCookie}}
+Content-Type: application/json; charset=utf-8
+
+{
+    "sublineId": 2,
+    "contents": [704767, 704766],
+    "date": "2019-12-15",
+    "lineId": 25
+}
+
+###

@@ -1,0 +1,13 @@
+### Авторизация
+// @no-log
+POST http://localhost:3000/login/
+Content-Type: application/json; charset=utf-8
+
+{
+    "email": "test",
+    "password": "123456"
+}
+
+> {% client.global.set("authCookie", response.headers.valueOf("set-cookie")); %}
+
+###

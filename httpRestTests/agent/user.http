@@ -1,0 +1,17 @@
+###
+GET http://localhost:3000/agent/api/users/my
+Cookie: {{authCookie}}
+###
+
+
+###
+POST http://localhost:3000/user/api/user/regTmpUserV2
+Cookie: {{authCookie}}
+Content-Type: application/json; charset=utf-8
+
+{
+    "days": "4",
+    "companies": [1, 2, 3]
+}
+
+###

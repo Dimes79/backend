@@ -1,0 +1,11 @@
+###
+GET http://localhost:3000/agent/api/projects?lastUpd=
+Cookie: {{authCookie}}
+
+###
+
+###
+GET http://localhost:3000/agent/api/projectsList
+Cookie: {{authCookie}}
+
+###

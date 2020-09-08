@@ -1,0 +1,65 @@
+###
+GET http://localhost:3000/admin/api/users/my
+Cookie: {{authCookie}}
+###
+
+
+###
+GET http://localhost:3000/admin/api/users/
+Cookie: {{authCookie}}
+###
+
+###
+GET http://localhost:3000/admin/api/users/25
+Cookie: {{authCookie}}
+###
+
+
+###
+POST http://localhost:3000/admin/api/users/
+Cookie: {{authCookie}}
+Content-Type: application/json; charset=utf-8
+
+{
+    "status": "ACTIVE",
+    "name": "test",
+    "email": "test1@site.com",
+    "kind": "AGENT",
+    "projects": [],
+    "password": "test"
+}
+
+###
+
+###
+PUT http://localhost:3000/admin/api/users/21
+Cookie: {{authCookie}}
+Content-Type: application/json; charset=utf-8
+
+{
+    "status": "ACTIVE",
+    "name": "Dimes",
+    "email": "dimes79@gmail.com",
+    "kind": "SUPER",
+    "projects": [
+        1,
+        2,
+        7,
+        6,
+        5
+    ],
+    "companies": [
+        2,
+        1
+    ],
+    "canCreateTmpUser": true
+}
+
+###
+
+
+###
+DELETE http://localhost:3000/admin/api/users/12
+Cookie: {{authCookie}}
+
+###

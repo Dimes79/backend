@@ -1,0 +1,37 @@
+### Авторизация
+POST http://localhost:3000/agent/api/login/
+Content-Type: application/json; charset=utf-8
+
+{
+    "email": "agent@site.com",
+    "password": "12345"
+}
+
+> {% client.global.set("authCookie", response.headers.valueOf("set-cookie")) %}
+
+###
+
+
+###
+GET http://localhost:3000/agent/api/logout
+Content-Type: application/json; charset=utf-8
+###
+
+### Авторизация
+POST https://platforma.tech/agent/api/login/
+Content-Type: application/json; charset=utf-8
+
+{
+    "email": "agent@site.com",
+    "password": "12345"
+}
+
+> {% client.global.set("authCookie", response.headers.valueOf("set-cookie")) %}
+
+###
+
+
+###
+GET https://platforma.tech/agent/api/logout
+Content-Type: application/json; charset=utf-8
+###

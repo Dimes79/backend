@@ -1,0 +1,45 @@
+### Регистрация нового пользователя
+// @no-log
+POST http://localhost:3000/user/api/user/
+Content-Type: application/json; charset=utf-8
+
+{
+  "name": "Dimes",
+  "email": "dimes79@gmail.com",
+  "password": "12345"
+}
+###
+
+### Востановление пароля
+// @no-log
+POST http://localhost:3000/user/api/user/remindPassword/
+Content-Type: application/json; charset=utf-8
+
+{
+  "email": "dimes79@gmail.com"
+}
+###
+
+### Смена пароля
+// @no-log
+POST http://localhost:3000/user/api/user/chgPassword
+Content-Type: application/json; charset=utf-8
+
+{
+  "email": "dimes79@gmail.com",
+  "key": "ad3b96e0-db16-4559-b7b0-7e9e7e810b0f",
+  "password": "1234567"
+}
+###
+
+### Регистрация временного пользователя
+// @no-log
+POST http://localhost:3000/user/api/user/regTmpUser
+Content-Type: application/json; charset=utf-8
+Cookie: {{authCookie}}
+
+{
+    "email": "dimes79@yandex.ru",
+    "email91": "dimes79@gmail.com"
+}
+###

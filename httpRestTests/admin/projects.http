@@ -1,0 +1,46 @@
+###
+// @no-log
+GET http://localhost:3000/admin/api/projects?companyId=1
+Cookie: {{authCookie}}
+
+###
+
+###
+// @no-log
+GET http://localhost:3000/admin/api/projects/5
+Cookie: {{authCookie}}
+
+###
+
+###
+// @no-log
+DELETE http://localhost:3000/admin/api/projects/3
+Cookie: {{authCookie}}
+
+###
+
+
+###
+// @no-log
+PUT http://localhost:3000/admin/api/projects/5
+Cookie: {{authCookie}}
+Content-Type: application/json; charset=utf-8
+
+{
+    "id": 5,
+    "status": "HIDDEN",
+    "name": "Тестовый проект",
+    "description": "Для всяких тестов",
+    "gps": {
+        "lat": 59.5627558,
+        "long": 30.0715033
+    },
+    "orderWeight": 0,
+    "companies": [
+        1,
+        2
+    ],
+    "auditRatio": 80
+}
+
+###

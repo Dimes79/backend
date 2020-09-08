@@ -1,0 +1,50 @@
+###
+GET http://localhost:3000/admin/api/projects/2/pickets
+Cookie: {{authCookie}}
+###
+
+
+###
+GET http://localhost:3000/admin/api/projects/2/pickets/282
+Cookie: {{authCookie}}
+###
+
+###
+DELETE http://localhost:3000/admin/api/projects/2/pickets/282
+Cookie: {{authCookie}}
+###
+
+
+###
+POST http://localhost:3000/admin/api/projects/2/pickets
+Cookie: {{authCookie}}
+Content-Type: application/json; charset=utf-8
+
+{
+    "name": "Атриум",
+    "gps": {
+        "lat": 59.574855,
+        "long": 30.124748
+    },
+    "projectId": 2
+}
+
+###
+
+###
+PUT http://localhost:3000/admin/api/projects/2/pickets/282
+Cookie: {{authCookie}}
+Content-Type: application/json; charset=utf-8
+
+{
+    "name": "Атриум2",
+    "gps": {
+        "lat": 59.574855,
+        "long": 30.124748
+    },
+    "projectId": 2
+}
+
+###
+
+

@@ -1,0 +1,7 @@
+SERVER_PORT=INTEGER || 3000
+
+SESSION_KEY=STRING
+
+REDIS_URL=URL(redis://localhost:6379)
+
+IMAGE_MAX_SIZE=INTEGER || 4000 (максимальный размер фото в px)
