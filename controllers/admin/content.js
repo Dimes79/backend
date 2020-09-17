@@ -1,13 +1,13 @@
-const { uniqueId } = require("lodash");
-const { saveContent, deleteContent, editVideo } = require("../../modules/content");
-const { getExif } = require("../../modules/exif");
-const { crPoints } = require("../../modules/restoreGps");
+const {uniqueId} = require("lodash");
+const {saveContent, deleteContent, editVideo} = require("../../modules/content");
+const {getExif} = require("../../modules/exif");
+const {crPoints} = require("../../modules/restoreGps");
 const linkSublinesFu = require("../../modules/linkSublines");
 
-const { Content, Sequelize: { Op } } = require("../../models");
+const {Content, Sequelize: {Op}} = require("../../models");
 
 const getList = async function getList(req, res, next) {
-    const { limit, page } = req.preparePagination();
+    const {limit, page} = req.preparePagination();
 
     const where = {
         status: {
@@ -18,8 +18,8 @@ const getList = async function getList(req, res, next) {
         type: req.params.type.toUpperCase(),
     };
 
-    let { dateFrom } = req.query;
-    const { date } = req.body;
+    let {dateFrom} = req.query;
+    const {date} = req.body;
     if (!dateFrom && date) {
         dateFrom = date;
     }
@@ -33,7 +33,7 @@ const getList = async function getList(req, res, next) {
     }
 
     try {
-        const { rows, count } = await Content.findAndCountAll({
+        const {rows, count} = await Content.findAndCountAll({
             where,
             order: [["pointId", "DESC"], ["id", "DESC"]],
             offset: (page - 1) * limit,
@@ -98,7 +98,7 @@ const add = async function add(req, res, next) {
         const model = new Content(data);
         await model.save();
 
-        res.json({ success: true });
+        res.json({success: true});
     } catch (e) {
         next(e);
     }
@@ -114,7 +114,7 @@ const getCalendar = async function getCalendar(req, res, next) {
         type: req.params.type.toUpperCase(),
     };
 
-    const { dateFrom } = req.query;
+    const {dateFrom} = req.query;
     const dateTo = req.query.dateTo || dateFrom;
     if (dateFrom && !dateTo) {
         where.date = dateFrom;
@@ -199,8 +199,8 @@ const deleteModel = async function deleteModel(req, res, next) {
 
 const recalculateGps = async function recalculateGps(req, res, next) {
     try {
-        const { projectId, lineId } = req.params;
-        const { date } = req.body;
+        const {projectId, lineId} = req.params;
+        const {date} = req.body;
 
         await crPoints(projectId, lineId, date);
         res.sendData({});
@@ -217,7 +217,35 @@ const linkSubline = async function linkSubline(req, res, next) {
 
         await linkSublinesFu.link(sublineId, contents, date, lineId);
 
-        res.sendData({ success: true });
+        res.sendData({success: true});
+    } catch (e) {
+        next(e);
+    }
+};
+
+const setFirst = async function (req, res, next) {
+    try {
+        const {lineId, type} = req.params;
+        const {
+            date, id
+        } = req.body;
+
+
+        Content.update({isFirst: false}, {
+            where: {
+                lineId,
+                type: type.toUpperCase(),
+                date,
+            }
+        });
+        const model = await Content.findByPk(id);
+        if (model) {
+            model.isFirst = true;
+            model.save();
+        }
+
+
+        res.sendData({success: true});
     } catch (e) {
         next(e);
     }
@@ -231,4 +259,5 @@ module.exports = {
     delete: deleteModel,
     recalculateGps,
     linkSubline,
+    setFirst,
 };

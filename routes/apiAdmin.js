@@ -111,6 +111,8 @@ router.route("/projects/:projectId/lines/:lineId/content/:type/:modelID")
     .delete(contentController.delete);
 router.route("/projects/:projectId/lines/:lineId/content/:type/calendar")
     .get(contentController.getCalendar);
+router.route("/lines/:lineId/content/:type/first")
+    .post(contentController.setFirst);
 
 // Информация для Timelapse
 router.route("/timelapseInfo/:contentId")
