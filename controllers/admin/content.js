@@ -231,7 +231,7 @@ const setFirst = async function (req, res, next) {
         } = req.body;
 
 
-        Content.update({isFirst: false}, {
+        await Content.update({isFirst: false}, {
             where: {
                 lineId,
                 type: type.toUpperCase(),
@@ -241,7 +241,7 @@ const setFirst = async function (req, res, next) {
         const model = await Content.findByPk(id);
         if (model) {
             model.isFirst = true;
-            model.save();
+            await model.save();
         }
 
 
