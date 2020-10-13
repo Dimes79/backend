@@ -9,6 +9,8 @@ const saveContentsJob = require("./jobs/saveContentsJob");
 const dbBackupJob = require("./jobs/dbBackupJob");
 const checkSystemJob = require("./jobs/checkSystemJob");
 const deleteTmpUsersJob = require("./jobs/deleteTmpUsersJob");
+const correctGPSJob = require("./jobs/correctGPSJob");
+const mergeVideosJob = require("./jobs/mergeVideosJob");
 
 // const deleteContentJob = require("./jobs/deleteContentJob");
 // const testJob = require("./jobs/testJob");
@@ -82,6 +84,28 @@ const start = async function start() {
             console.log("deleteTmpUsersJob error", e.message);
         }
     });
+
+    index.scheduleJob("0 * * * *", async () => {
+        try {
+            const isCron = await locker.cronLockChk(uniqKey);
+            if (isCron) {
+                await correctGPSJob.start();
+            }
+        } catch (e) {
+            console.log("correctGPSJob error", e.message);
+        }
+    });
+
+    index.scheduleJob("0 0 * * *", async () => {
+        try {
+            const isCron = await locker.cronLockChk(uniqKey);
+            if (isCron) {
+                await mergeVideosJob.start();
+            }
+        } catch (e) {
+            console.log("mergeVideosJob error", e.message);
+        }
+    });
 };
 
 module.exports = {
@@ -93,6 +117,8 @@ module.exports = {
     dbBackupJob,
     checkSystemJob,
     deleteTmpUsersJob,
+    correctGPSJob,
+    mergeVideosJob,
 
     // deleteContentJob,
     // uploadContentJob,

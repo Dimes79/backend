@@ -2,10 +2,10 @@ const fs = require("fs");
 const path = require("path");
 const uniqid = require("uniqid");
 const gm = require("gm")
-    .subClass({ imageMagick: true });
+    .subClass({imageMagick: true});
 const moment = require("moment");
 const ffmpeg = require("fluent-ffmpeg");
-const { tmpDir } = require("./tmpDir");
+const {tmpDir} = require("./tmpDir");
 
 const resizeImage = async function resizeImage(fileSrc, fileTo, size) {
     return new Promise((resolve, reject) => {
@@ -269,7 +269,16 @@ const joinVideos = async function joinVideos(files) {
         });
     }).then(() => new Promise((resolve, reject) => {
         try {
+            console.log({
+                listFile,
+                "exists": fs.existsSync(listFile)
+            })
+
+            const log = (...args) => console.log(...args);
             ffmpeg()
+                // .on('start', function(commandLine) {
+                //     console.log('Spawned Ffmpeg with command: ' + commandLine);
+                // })
                 .input(listFile)
                 .inputOptions([
                     "-f concat",
@@ -528,7 +537,7 @@ function convertVideoWithParams(fileSrc, fileTarget, params) {
                 .addOption("-codec:v", "libx264")
                 .addOption("-codec:a", "copy");
 
-            const { size } = params;
+            const {size} = params;
             if (size) {
                 let scaleCmd;
                 if (size[0] > size[1]) {
@@ -557,14 +566,14 @@ function convertVideoWithParams(fileSrc, fileTarget, params) {
                         reject(new Error(`Cannot ffprobe ${err.message}`));
                         return;
                     }
-                    const { streams } = data;
+                    const {streams} = data;
                     if (!streams || streams.length === 0) {
                         reject(new Error("Cannot ffprobe stream err"));
                         return;
                     }
 
                     const [stream] = streams;
-                    const { width, height } = stream;
+                    const {width, height} = stream;
                     if (!width || !height) {
                         reject(new Error("Cannot ffprobe stream size err"));
                         return;
@@ -576,7 +585,7 @@ function convertVideoWithParams(fileSrc, fileTarget, params) {
             reject(new Error(`convertVideo ffprobe ${e.message}`));
         }
     })).then(([width, height]) => new Promise((resolve, reject) => {
-        const { size } = params;
+        const {size} = params;
         try {
             const convertor = ffmpeg(fileTmp);
 

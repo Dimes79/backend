@@ -160,6 +160,7 @@ function crData(req) {
         projectId: req.params.projectId,
         orderWeight: req.body.orderWeight,
         tabs: req.body.tabs,
+        mergeAero: req.body.mergeAero,
     };
 
     if (req.body.status) {

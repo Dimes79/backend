@@ -8,8 +8,8 @@ const tmplDir = "./views/mails/";
 const transporter = nodemailer.createTransport({
     service: "yandex",
     auth: {
-        user: "noreply@platforma.tech",
-        pass: "J2xs8Qp#",
+        user: "noreply@sfera.com.ru",
+        pass: "H3o9Z6q4",
     },
 });
 
@@ -24,7 +24,7 @@ transporter.use("compile", hbsMailer({
     extName: ".hbs",
 }));
 
-const fromEmail = "noreply@platforma.tech";
+const fromEmail = "noreply@sfera.com.ru";
 
 async function mailer(to, subject, tmpl, data = {}) {
     const mailOptions = {

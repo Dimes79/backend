@@ -23,7 +23,7 @@ const add = async function add(req, res, next) {
         }
 
         const model = new User(req.body);
-        model.companies = [1];
+        model.companies = [5];
         model.status = "WAITING";
         model.publicKey = uuidv4();
         await model.asyncSetPassword(model.password);
@@ -88,7 +88,7 @@ const remindPassword = async function remindPassword(req, res, next) {
         let email = req.body.email || "";
         email = email.toLowerCase();
         if (email.indexOf("@") === -1) {
-            email += "@platforma.tech";
+            email += "@sfera.com.ru";
         }
 
         const model = await User.findOne({
@@ -102,7 +102,7 @@ const remindPassword = async function remindPassword(req, res, next) {
             return;
         }
 
-        if (email.indexOf("@platforma.tech") !== -1) {
+        if (email.indexOf("@sfera.com.ru") !== -1) {
             await sendBusinessAccPassword(model);
         } else {
             await sendPassword(model, req);
@@ -217,7 +217,7 @@ const regTmpUserV2 = async function regTmpUserV2(req, res, next) {
         let email;
         do {
             login = generatePassword(5);
-            email = `${login}@platforma.tech`;
+            email = `${login}@sfera.com.ru`;
             // eslint-disable-next-line no-await-in-loop
             model = await User.findOne({
                 where: {
@@ -273,7 +273,7 @@ async function sendPassword(model, req) {
 }
 
 async function sendBusinessAccPassword(model) {
-    await mailer("office@platforma.tech", "Акк забыл пароль", "chgPasswordBusinessAcc", {
+    await mailer("office@sfera.com.ru", "Акк забыл пароль", "chgPasswordBusinessAcc", {
         name: model.name,
         email: model.email,
     });

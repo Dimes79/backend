@@ -12,7 +12,7 @@ passport.use(new LocalStrategy(
         try {
             let usernameCorrect = username;
             if (usernameCorrect.indexOf("@") === -1) {
-                usernameCorrect += "@platforma.tech";
+                usernameCorrect += "@sfera.com.ru";
             }
 
             usernameCorrect = usernameCorrect.toLowerCase();

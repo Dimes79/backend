@@ -596,4 +596,6 @@ module.exports = {
     replaceTmbContent,
     saveTmbForCompany,
     saveBgVideoForCompany,
+    getDir,
+    getWWWDir,
 };
