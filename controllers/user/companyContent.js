@@ -30,7 +30,7 @@ async function getStreams(req, res, next) {
         }
 
         if (m) {
-            m.src.stream = "https://platforma.tech/public/playlist.m3u";
+            // m.src.stream = "https://sfera.com.ru/public/playlist.m3u";
             m.description = "В эфире";
         }
 

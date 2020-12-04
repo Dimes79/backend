@@ -12,11 +12,11 @@ const tmplDays = [
         projectId: 2,
         lineId: 3,
     },
-    {
-        date: "2020-09-23",
-        projectId: 6,
-        lineId: 13,
-    },
+    // {
+    //     date: "2020-09-23",
+    //     projectId: 6,
+    //     lineId: 13,
+    // },
     {
         date: "2020-09-23",
         projectId: 7,

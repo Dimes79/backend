@@ -13,7 +13,8 @@
     "scripts": {
         "dev": "DEBUG=platforma:* nodemon -e \"js hbs\" -x ./bin/www",
         "devwin": "crossenv DEBUG=platforma:* nodemon ./bin/www",
-        "start": "node ./bin/www"
+        "start": "node ./bin/www",
+        "test": "node ./test.js"
     },
     "nodemonConfig": {
         "ignore": [
