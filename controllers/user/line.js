@@ -107,10 +107,7 @@ exports.getContentsTabs = async function getContentsTabs(req, res, next) {
             tabs = (await Promise.all(queue)).filter((tab) => tab);
         }
 
-        res.sendData({
-            date,
-            tabs,
-        });
+        res.sendData(tabs, undefined, { date });
     } catch (e) {
         next(e);
     }
