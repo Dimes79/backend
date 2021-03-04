@@ -1,20 +1,8 @@
 [
     {
-        "title": "System (Основной sdd)",
-        "path": "/app/tmp",
-        "realPath": "/tmp",
+        "title": "System",
+        "path": "/",
+        "realPath": "/",
         "minFreeSpace": 80
-    },
-    {
-        "title": "Transfer (Второй ssd)",
-        "path": "/app/transfer",
-        "realPath": "/transfer",
-        "minFreeSpace": 80
-    },
-    {
-        "title": "Storage (8Tb HDD)",
-        "path": "/app/storage",
-        "realPath": "/storage",
-        "minFreeSpace": 300
     }
 ]

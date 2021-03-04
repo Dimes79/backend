@@ -147,9 +147,11 @@ const convertVideo = async function convertVideo(fileSrc, dir, date, withoutLogo
             const convertor = ffmpeg()
                 .input(fileSrc);
             if (!withoutLogo) {
+                let font = path.join(path.resolve("."), "static", "fonts", "ptmonobold.ttf")
+
                 convertor.input(wm)
-                    .addOption("-filter_complex", `[0:v]drawtext=fontfile=OpenSans-Regular.ttf:text='${dateF}'`
-                        + ":fontcolor=0xff0050FF:fontsize=45:x=1620:y=20[text]; [text][1:v]overlay[filtered]")
+                    .addOption("-filter_complex", `[0:v]drawtext=fontfile=${font}:text='${dateF}'`
+                        + ":fontcolor=0xffffffa0:fontsize=30:x=1680:y=65[text]; [text][1:v]overlay[filtered]")
                     .addOption("-map", "[filtered]")
                     .addOption("-map", "0:a?");
             }
@@ -351,12 +353,15 @@ async function convertAerial(fileSrc, dir, date, config) {
         const wm = path.join(path.resolve("."), "static", "wmaero.png");
         const dateF = converDateWM(date);
 
+        let font = path.join(path.resolve("."), "static", "fonts", "ptmonobold.ttf")
+
         try {
+            let font = path.join(path.resolve("."), "static", "fonts", "ptmonobold.ttf")
             ffmpeg()
                 .input(fileFrom)
                 .input(wm)
-                .addOption("-filter_complex", `[0:v]drawtext=fontfile=OpenSans-Regular.ttf:text='${dateF}'`
-                    + ":fontcolor=0xff0050FF:fontsize=45:x=1620:y=20[text]; [text][1:v]overlay[filtered]")
+                .addOption("-filter_complex", `[0:v]drawtext=fontfile=${font}:text='${dateF}'`
+                    + ":fontcolor=0xffffffa0:fontsize=30:x=1680:y=65[text]; [text][1:v]overlay[filtered]")
                 .addOption("-map", "[filtered]")
                 .addOption("-codec:v", "libx264")
                 .addOption("-b:v", "6000K")
@@ -444,9 +449,8 @@ async function panoramaWm(filePath, date) {
         const wm = path.join(path.resolve("."), "static", "wm360.png");
 
         const prc = gm(filePath)
-            .gravity("Center")
-            .composite(wm)
-            .geometry("-210+350");
+            .gravity("SouthWest")
+            .composite(wm);
 
         prc.write(filePath, (err) => {
             if (err) {
@@ -458,14 +462,19 @@ async function panoramaWm(filePath, date) {
     }));
 
     promise = promise.then(() => new Promise((resolve, reject) => {
+        let font = path.join(path.resolve("."), "static", "fonts", "ptmonobold.ttf")
+        let text = `СФЕРА   ${dateF}`;
+
         const prc = gm(filePath)
             .quality(85);
-
         prc
-            .gravity("Center")
-            .fill("#ff0050")
-            .fontSize(63)
-            .drawText(200, 350, dateF);
+            .gravity("SouthWest")
+            .fill("#ffffff")
+            .font(font, 60)
+            .drawText(100, 380, text)
+            .drawText(1100, 380, text)
+            .drawText(2100, 380, text)
+            .drawText(3100, 380, text);
 
         prc.write(filePath, (err) => {
             if (err) {
@@ -504,10 +513,12 @@ async function photoWm(filePath, date) {
         const prc = gm(filePath)
             .quality(85);
 
+        let font = path.join(path.resolve("."), "static", "fonts", "ptmonobold.ttf")
         prc
-            .fill("#ff0050")
-            .fontSize(63)
-            .drawText(10, 0, dateF, "northeast");
+            .fill("#ffffffc0")
+            .font(font, 30)
+            // .stroke("#000", 1)
+            .drawText(30, 70, dateF, "northeast");
 
         prc.write(filePath, (err) => {
             if (err) {
@@ -620,10 +631,10 @@ function convertVideoWithParams(fileSrc, fileTarget, params) {
 function converDateWM(date) {
     if (!date) {
         return moment()
-            .format("DD/MM/YYYY");
+            .format("DD.MM.YYYY");
     }
     const t = date.split("-");
-    return `${t[2]}/${t[1]}/${t[0]}`;
+    return `${t[2]}.${t[1]}.${t[0]}`;
 }
 
 module.exports = {

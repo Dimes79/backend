@@ -30,6 +30,11 @@
           {{#if_eq type 'aerial' }}
               <th scope="col">Аэросъемка</th>
           {{/if_eq}}
+
+          {{#if_eq type 'contents' }}
+              <th scope="col">Панорамы</th>
+              <th scope="col">Аэросъемка</th>
+          {{/if_eq}}
           <th scope="col">Итого</th>
       </tr>
       </thead>
@@ -48,6 +53,11 @@
                   <td scope="col"><a href="/audit/{{ ../../objects }}/content/aerial/{{ ../date }}">{{ ../aerials }}</td>
               {{/if_eq}}
 
+              {{#if_eq ../type 'contents' }}
+                  <td scope="col"><a href="/audit/{{ ../../objects }}/content/panorama/{{ ../date }}">{{ ../panoramas }}</td>
+                  <td scope="col"><a href="/audit/{{ ../../objects }}/content/aerial/{{ ../date }}">{{ ../aerials }}</td>
+              {{/if_eq}}
+
               <td scope="col">{{ total }}</td>
           </tr>
       {{/each}}
@@ -62,6 +72,11 @@
           {{/if_eq}}
 
           {{#if_eq type 'aerial' }}
+              <th scope="col">{{ ../total.aerials }}</th>
+          {{/if_eq}}
+
+          {{#if_eq type 'contents' }}
+              <th scope="col">{{ ../total.panoramas }}</th>
               <th scope="col">{{ ../total.aerials }}</th>
           {{/if_eq}}
           <th scope="col">{{ total.total }}</th>

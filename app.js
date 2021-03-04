@@ -56,7 +56,7 @@ app.use("/stream", express.static(path.join(__dirname, "stream")));
 const storageAuthentication = require("./middlewares/storageAuthentication");
 
 app.use("/storage", storageAuthentication, express.static(path.join(__dirname, "storage")));
-app.use("/static", storageAuthentication, express.static(path.join(__dirname, process.env.STATIC_DIR || "static")));
+app.use("/static", express.static(path.join(__dirname, process.env.STATIC_DIR || "static")));
 
 const indexRouter = require("./routes/index");
 

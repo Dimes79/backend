@@ -8,6 +8,7 @@ const { Op } = Sequelize;
 const types = {
     photo: ["IMAGE", "VIDEO", "PANORAMA"],
     aerial: ["AERIAL"],
+    contents: ["PANORAMA","AERIAL"],
 };
 
 const correctDateFrom = "2019-09-01";

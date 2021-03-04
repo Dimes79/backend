@@ -11,6 +11,7 @@ const checkSystemJob = require("./jobs/checkSystemJob");
 const deleteTmpUsersJob = require("./jobs/deleteTmpUsersJob");
 const correctGPSJob = require("./jobs/correctGPSJob");
 const mergeVideosJob = require("./jobs/mergeVideosJob");
+const autoHiddenLinesJob = require("./jobs/autoHiddenLinesJob");
 
 // const deleteContentJob = require("./jobs/deleteContentJob");
 // const testJob = require("./jobs/testJob");
@@ -106,6 +107,17 @@ const start = async function start() {
             console.log("mergeVideosJob error", e.message);
         }
     });
+
+    index.scheduleJob("0 * * * *", async () => {
+        try {
+            const isCron = await locker.cronLockChk(uniqKey);
+            if (isCron) {
+                await autoHiddenLinesJob.start();
+            }
+        } catch (e) {
+            console.log("autoHiddenLinesJob error", e.message);
+        }
+    });
 };
 
 module.exports = {
@@ -119,6 +131,7 @@ module.exports = {
     deleteTmpUsersJob,
     correctGPSJob,
     mergeVideosJob,
+    autoHiddenLinesJob,
 
     // deleteContentJob,
     // uploadContentJob,

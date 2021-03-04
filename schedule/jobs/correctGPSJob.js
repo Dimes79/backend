@@ -22,6 +22,52 @@ const tmplDays = [
         projectId: 7,
         lineId: 14,
     },
+    {
+        date: "2021-02-17",
+        projectId: 4,
+        lineId: 7,
+    },
+    {
+        date: "2021-02-17",
+        projectId: 4,
+        lineId: 11,
+    },
+
+    {
+        date: "2021-02-21",
+        projectId: 32,
+        lineId: 107,
+    },
+    {
+        date: "2021-02-27",
+        projectId: 32,
+        lineId: 103,
+    },
+    {
+        date: "2021-02-27",
+        projectId: 32,
+        lineId: 104,
+    },
+    {
+        date: "2021-02-27",
+        projectId: 32,
+        lineId: 105,
+    },
+    {
+        date: "2021-02-27",
+        projectId: 32,
+        lineId: 106,
+    },
+    {
+        date: "2021-02-27",
+        projectId: 32,
+        lineId: 108,
+    },
+    {
+        date: "2021-02-27",
+        projectId: 32,
+        lineId: 110,
+    },
 ];
 
 const start = async function start() {
