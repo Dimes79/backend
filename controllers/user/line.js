@@ -1,5 +1,5 @@
 const companyFu = require("../../modules/companyFu");
-const { Line } = require("../../models");
+const { Line, Content } = require("../../models");
 
 exports.getList = async function getList(req, res, next) {
     const { projectId } = req.params;
@@ -28,7 +28,7 @@ exports.getList = async function getList(req, res, next) {
 
 exports.get = async function get(req, res, next) {
     try {
-        const model = await Line.findOne({
+        const line = await Line.findOne({
             include: ["project", "sublines"],
             where: {
                 id: req.params.modelID,
@@ -36,17 +36,17 @@ exports.get = async function get(req, res, next) {
                 status: "ACTIVE",
             },
         });
-        if (!model) {
+        if (!line) {
             res.sendError("notFound");
             return;
         }
 
-        const isCompanyPermit = await companyFu.isPermintByProject(model.projectId, req, res);
+        const isCompanyPermit = await companyFu.isPermintByProject(line.projectId, req, res);
         if (!isCompanyPermit) {
             return;
         }
 
-        res.sendData(model);
+        res.sendData(line);
     } catch (e) {
         next(e);
     }
@@ -54,25 +54,75 @@ exports.get = async function get(req, res, next) {
 
 exports.getByLineId = async function get(req, res, next) {
     try {
-        const model = await Line.findOne({
+        const line = await Line.findOne({
             include: ["project", "sublines"],
             where: {
                 id: req.params.modelID,
                 status: "ACTIVE",
             },
         });
-        if (!model) {
+        if (!line) {
             res.sendError("notFound");
             return;
         }
 
-        const isCompanyPermit = await companyFu.isPermintByProject(model.projectId, req, res);
+        const isCompanyPermit = await companyFu.isPermintByProject(line.projectId, req, res);
         if (!isCompanyPermit) {
             return;
         }
 
-        res.sendData(model);
+        res.sendData(line);
     } catch (e) {
         next(e);
     }
 };
+
+exports.getContentsTabs = async function getContentsTabs(req, res, next) {
+    const { modelID } = req.params;
+    let { date } = req.query;
+    try {
+        const line = await Line.findByPk(modelID);
+        if (!line) {
+            res.sendError("notFound");
+            return;
+        }
+
+        const isCompanyPermit = await companyFu.isPermintByProject(line.projectId, req, res);
+        if (!isCompanyPermit) {
+            return;
+        }
+
+        if (!date) {
+            date = await Content.max("date", {
+                where: {
+                    lineId: modelID,
+                },
+            });
+        }
+
+        let { tabs } = line;
+
+        if (tabs) {
+            const queue = tabs.reduce((acc, tab) => acc.concat(checkTab(modelID, tab, date)), []);
+            tabs = (await Promise.all(queue)).filter((tab) => tab);
+        }
+
+        res.sendData({
+            date,
+            tabs,
+        });
+    } catch (e) {
+        next(e);
+    }
+};
+
+async function checkTab(lineId, tab, date) {
+    const content = await Content.findOne({
+        where: {
+            type: tab.toUpperCase(),
+            date,
+            lineId,
+        },
+    });
+    return (content) ? content.type : null;
+}

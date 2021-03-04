@@ -136,6 +136,8 @@ router.route("/projects/:projectId/lines/:modelID")
     .get(lineController.get);
 router.route("/lines/:modelID")
     .get(lineController.getByLineId);
+router.route("/lines/:modelID/contentsTabs")
+    .get(lineController.getContentsTabs);
 
 // Пикеты
 router.route("/projects/:projectId/pickets").get(picketController.list);
