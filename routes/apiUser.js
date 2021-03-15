@@ -17,6 +17,7 @@ const timelapseController = require("../controllers/user/timelapse");
 const aerialController = require("../controllers/user/aerial");
 const siteEventsController = require("../controllers/user/siteEvents");
 const shareController = require("../controllers/user/shareController");
+const appController = require("../controllers/user/appController");
 
 const router = express.Router();
 
@@ -162,6 +163,8 @@ router.route("/lines/:lineId/content/:type/calendar")
     .get(contentController.getCalendarByLineId);
 router.route("/content/lapse/:id")
     .get(contentController.getTimelapseById);
+router.route("/lines/:lineId/content/panorama/archive")
+    .get(contentController.getArchive);
 
 // Информация для Timelapse
 router.route("/timelapseInfo/:contentId")
@@ -176,5 +179,9 @@ router.route("/aerial/calendar")
 // Share
 router.route("/share")
     .get(shareController.get);
+
+// App
+router.route("/app/chkVersion")
+    .get(appController.chkVersion);
 
 module.exports = router;

@@ -1,3 +1,10 @@
+const path = require("path");
+const fs = require("fs");
+const util = require("util");
+const exec = util.promisify(require("child_process").exec);
+const archiver = require("archiver");
+const uuidv4 = require("uuid/v4");
+const { tmpDir } = require("../../modules/tmpDir");
 const companyFu = require("../../modules/companyFu");
 const { singPath } = require("../../modules/signUrlFu");
 const { Content, Line, Sequelize: { Op } } = require("../../models");
@@ -134,7 +141,6 @@ const getCalendar = async function getCalendar(req, res, next) {
         status: "ACTIVE",
         projectId,
         lineId: req.params.lineId,
-        type: req.params.type.toUpperCase(),
     };
 
     if (sublineId) {
@@ -173,7 +179,6 @@ const getCalendarByLineId = async function getCalendarByLineId(req, res, next) {
     const where = {
         status: "ACTIVE",
         lineId,
-        type: req.params.type.toUpperCase(),
     };
 
     if (sublineId) {
@@ -294,6 +299,89 @@ async function singContent(userId, content) {
     return content;
 }
 
+async function getArchive(req, res, next) {
+    const { lineId } = req.params;
+    const {
+        dateFrom, dateTo, pointId, fov, yaw, pitch, width, height,
+    } = req.query;
+
+    try {
+        const projectId = await getProjectId(lineId);
+        const isCompanyPermit = await companyFu.isPermintByProject(projectId, req, res);
+        if (!isCompanyPermit) {
+            return;
+        }
+
+        const line = await Line.findByPk(lineId);
+        const contents = await Content.findAll({
+            where: {
+                lineId,
+                pointId,
+                date: {
+                    [Op.between]: [dateFrom, dateTo],
+                },
+            },
+        });
+
+
+        const files = [];
+        contents.forEach((elm) => {
+            files.push({
+                date: elm.date,
+                file: path.join(path.resolve("."), elm.src.src),
+                resFile: path.join(tmpDir, `${uuidv4()}.png`),
+            });
+        });
+
+        await splitPanoramas(files, fov, yaw, pitch, width, height);
+
+        res.attachment(`${line.name}_${convertDate(dateFrom)}-${convertDate(dateTo)}.zip`);
+
+        // const zipFile = path.join(tmpDir, `${uuidv4()}.zip`);
+        const archive = archiver("zip", {
+            zlib: { level: 9 },
+        });
+
+        archive.pipe(res);
+
+        archive.on("end", () => {
+            res.end();
+        });
+
+        archive.on("error", (err) => {
+            next(err);
+        });
+
+        files.forEach((elm) => {
+            archive.append(fs.createReadStream(elm.resFile), { name: `${convertDate(elm.date)}.png` });
+        });
+
+        archive.finalize();
+    } catch (e) {
+        next(e);
+    }
+}
+
+function splitPanoramas(files, fov, yaw, pitch, width, height) {
+    let queue = Promise.resolve();
+    files.forEach((elm) => {
+        queue = queue.then(async () => {
+            const cmd = `python3 ./tools/panoramaSpliter.py ${elm.file} ${elm.resFile}`
+                + ` ${height} ${width} ${yaw} ${pitch} ${fov}`;
+            const { stdout, stderr } = await exec(cmd);
+            console.log({
+                stdout,
+                stderr,
+            });
+        });
+    });
+    return queue;
+}
+
+function convertDate(date) {
+    return date.split("-").reverse().join(".");
+}
+
 module.exports = {
     getList,
     getContentById,
@@ -301,4 +389,5 @@ module.exports = {
     getCalendar,
     getCalendarByLineId,
     getListByPoint,
+    getArchive,
 };

@@ -13,6 +13,7 @@
     "scripts": {
         "dev": "DEBUG=platforma:* nodemon -e \"js hbs\" -x ./bin/www",
         "devwin": "crossenv DEBUG=platforma:* nodemon ./bin/www",
+        "prestart": "pip3 install -r requirements.txt",
         "start": "node ./bin/www",
         "test": "node ./test.js"
     },
@@ -24,13 +25,14 @@
         ]
     },
     "dependencies": {
+        "archiver": "^5.3.0",
         "async-lock": "^1.1.3",
         "bowser": "^2.9.0",
+        "check-disk-space": "^2.1.0",
         "connect-redis": "^3.3.3",
         "connect-timeout": "^1.9.0",
         "cookie-parser": "^1.4.5",
         "debug": "^4.1.1",
-        "diskusage": "^1.1.3",
         "dist-exiftool": "^10.53.0",
         "dotenv": "^8.2.0",
         "email-validator": "^2.0.4",

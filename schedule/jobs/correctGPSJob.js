@@ -2,7 +2,7 @@
 // node ./schedule/start.js correctGPSJob
 
 const moment = require("moment");
-const { Content, Sequelize: {Op} } = require("../../models/");
+const { Content, Sequelize: { Op } } = require("../../models");
 const locker = require("../../modules/locker");
 
 const maxDays = 3; // На сколько дней назад следим за сетами
@@ -68,6 +68,17 @@ const tmplDays = [
         projectId: 32,
         lineId: 110,
     },
+
+    {
+        date: "2021-03-10",
+        projectId: 35,
+        lineId: 116,
+    },
+    {
+        date: "2021-03-10",
+        projectId: 35,
+        lineId: 115,
+    },
 ];
 
 const start = async function start() {
@@ -75,13 +86,14 @@ const start = async function start() {
     if (isOk) {
         for (let i = 0; i < tmplDays.length; i += 1) {
             const tmpl = tmplDays[i];
+            console.log({
+                tmpl,
+            });
             const tmplSet = await getTmplsSet(tmpl);
             await correntPoints(tmplSet, tmpl);
         }
         await locker.unlockJob("correctGPSJob");
     }
-
-
 };
 
 async function correntPoints(tmplSet, tmpl) {
@@ -105,7 +117,7 @@ async function correntPoints(tmplSet, tmpl) {
             type: "PANORAMA",
         };
         await Content.update({
-            gps: point.gps
+            gps: point.gps,
         }, { where });
     }
 }

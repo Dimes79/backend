@@ -1,8 +1,9 @@
 // node ./tools/filePuppeteer.js
 
-const puppeteer = require('puppeteer');
-const fs = require('fs');
-const indexFile = `./tools/data/index.html`; // file://${process.cwd()}
+const puppeteer = require("puppeteer");
+const fs = require("fs");
+
+const indexFile = "./tools/data/index.html"; // file://${process.cwd()}
 const inputFile = `file://${process.cwd()}/tools/data/in.jpg`;
 const outFile = './tools/data/out.jpg';
 
@@ -16,7 +17,6 @@ async function main(outWidth, outHeight) {
         headless: true,
         ignoreHTTPSErrors: true,
         args: [
-
             '--disable-web-security',
             `--window-size=${outWidth},${outHeight}`
         ],

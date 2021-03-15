@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const diskusage = require("diskusage");
+const checkDiskSpace = require("check-disk-space");
 
 const config = readConfig();
 
@@ -10,19 +10,17 @@ const getDisksInfo = function getDisksInfo() {
 };
 
 async function readDiskInfo(disk) {
-    return new Promise(((resolve, reject) => {
-        diskusage.check(disk.path, (err, info) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve({
-                    title: disk.title,
-                    minFreeSpace: disk.minFreeSpace,
-                    info,
-                });
-            }
-        });
-    }));
+    return checkDiskSpace(disk.path).then((diskSpace) => {
+        return {
+            title: disk.title,
+            minFreeSpace: disk.minFreeSpace,
+            info: {
+                available: diskSpace.free,
+                free: diskSpace.free,
+                total: diskSpace.size,
+            },
+        };
+    });
 }
 
 function readConfig() {
